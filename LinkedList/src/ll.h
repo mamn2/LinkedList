@@ -15,6 +15,7 @@ class LinkedList {
 
     struct LinkedListNode {
         LinkedListNode(const ElementType &value);
+        ~LinkedListNode();
         LinkedListNode* next_;
         ElementType value_;
     };
@@ -72,7 +73,7 @@ public:
     const_iterator end() const;
     
 private:
-    int listSize_;
+    unsigned long listSize_;
     LinkedListNode* start_;
     LinkedListNode* last_;
 };

@@ -8,20 +8,30 @@ template<typename ElementType>
 LinkedList<ElementType>::LinkedListNode::LinkedListNode(const ElementType &value) : value_(value) {}
 
 template<typename ElementType>
+LinkedList<ElementType>::LinkedListNode::~LinkedListNode() {
+    delete next_;
+}
+
+template<typename ElementType>
 LinkedList<ElementType>::LinkedList() {}
 
 template<typename ElementType>
 LinkedList<ElementType>::LinkedList(const std::vector<ElementType> &values) {
     
-    if (values.size() >= 1) {
+    listSize_ = values.size();
+    
+    if (listSize_ >= 1) {
         start_ = new LinkedListNode(values[0]);
-        last_ = new LinkedListNode(values[values.size() - 1]);
     }
     
     LinkedListNode* current = start_;
 
-    for (int i = 1; i < values.size(); i++) {
+    for (int i = 1; i < listSize_; i++) {
         current->next_ = new LinkedListNode(values[i]);
+        if (i == listSize_ - 1) {
+            last_ = current->next_;
+        }
+        current = current->next_;
     }
 
 }
@@ -29,6 +39,10 @@ LinkedList<ElementType>::LinkedList(const std::vector<ElementType> &values) {
 // Copy constructor
 template<typename ElementType>
 LinkedList<ElementType>::LinkedList(const LinkedList<ElementType>& source) {
+    
+    listSize_ = source.size();
+    start_ = source.front();
+    last_ = source.back();
 
 }
 
@@ -41,13 +55,16 @@ LinkedList<ElementType>::LinkedList(LinkedList<ElementType>&& source) noexcept {
 // Destructor
 template<typename ElementType>
 LinkedList<ElementType>::~LinkedList() {
+    
+    //Recursively deletes all Nodes
+    delete start_;
 
 }
 
 // Copy assignment operator
 template<typename ElementType>
 LinkedList<ElementType>& LinkedList<ElementType>::operator= (const LinkedList<ElementType>& source) {
-
+    return LinkedList(source);
 }
 
 // Move assignment operator
@@ -58,21 +75,33 @@ LinkedList<ElementType>& LinkedList<ElementType>::operator= (LinkedList<ElementT
 
 template<typename ElementType>
 void LinkedList<ElementType>::push_front(ElementType value) {
+    
+    LinkedListNode* oldStart = start_;
+    start_ = new LinkedListNode(value);
+    start_->next_ = oldStart;
 
 }
 
 template<typename ElementType>
 void LinkedList<ElementType>::push_back(ElementType value) {
+    
+    LinkedListNode* oldLast = last_;
+    last_ = new LinkedListNode(value);
+    oldLast->next_ = last_;
 
 }
 
 template<typename ElementType>
 ElementType LinkedList<ElementType>::front() const{
+    
+    return start_->value_;
 
 }
 
 template<typename ElementType>
 ElementType LinkedList<ElementType>::back() const {
+    
+    return last_->value_;
 
 }
 

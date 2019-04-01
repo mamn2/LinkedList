@@ -17,8 +17,12 @@ int main() {
     vec.push_back(2);
     vec.push_back(8);
     
-    cs126linkedlist::LinkedList<int> list(vec);
-    int x = 3;
-    
+    cs126linkedlist::LinkedList<int>* lists = new cs126linkedlist::LinkedList<int>(vec);
+    lists->push_front(4);
+    lists->push_back(5);
+    //delete lists;
+    int first = lists->front();
+    int last = lists->back();
+    int x = 2;
     return 0;
 }
