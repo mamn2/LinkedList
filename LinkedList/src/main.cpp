@@ -7,9 +7,18 @@
 //
 
 #include <iostream>
+#include "ll.h"
 
-int main(int argc, const char * argv[]) {
+int main() {
     // insert code here...
     std::cout << "Hello, World!\n";
+    
+    std::vector<int> vec;
+    vec.push_back(2);
+    vec.push_back(8);
+    
+    cs126linkedlist::LinkedList<int> list(vec);
+    int x = 3;
+    
     return 0;
 }

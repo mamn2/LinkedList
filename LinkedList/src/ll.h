@@ -13,9 +13,11 @@ namespace cs126linkedlist {
 template<typename ElementType>
 class LinkedList {
 
-  /*
-   *  Declare any struct, class, or enum types you need to use here
-   */
+    struct LinkedListNode {
+        LinkedListNode(const ElementType &value);
+        LinkedListNode* next_;
+        ElementType value_;
+    };
 
 public:
     LinkedList();                                                   // Default constructor
@@ -37,6 +39,7 @@ public:
     int size() const;                           // return number of elements
     bool empty() const;                         // check if empty
     void clear();                               // clear the contents
+    void RemoveNth(const int n);                // remove the nth element
     void RemoveOdd();                           // remove the odd elements from the list 0 indexed
     bool operator==(const LinkedList<ElementType> &rhs) const;
 
@@ -67,6 +70,11 @@ public:
 
     const_iterator begin() const;
     const_iterator end() const;
+    
+private:
+    int listSize_;
+    LinkedListNode* start_;
+    LinkedListNode* last_;
 };
 
 template<typename ElementType>

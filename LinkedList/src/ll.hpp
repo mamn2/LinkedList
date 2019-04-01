@@ -2,13 +2,27 @@
 #include <cassert>
 #include "ll.h"
 
-template<typename ElementType>
-LinkedList<ElementType>::LinkedList() {
+using namespace cs126linkedlist;
 
-}
+template<typename ElementType>
+LinkedList<ElementType>::LinkedListNode::LinkedListNode(const ElementType &value) : value_(value) {}
+
+template<typename ElementType>
+LinkedList<ElementType>::LinkedList() {}
 
 template<typename ElementType>
 LinkedList<ElementType>::LinkedList(const std::vector<ElementType> &values) {
+    
+    if (values.size() >= 1) {
+        start_ = new LinkedListNode(values[0]);
+        last_ = new LinkedListNode(values[values.size() - 1]);
+    }
+    
+    LinkedListNode* current = start_;
+
+    for (int i = 1; i < values.size(); i++) {
+        current->next_ = new LinkedListNode(values[i]);
+    }
 
 }
 
@@ -56,7 +70,7 @@ template<typename ElementType>
 ElementType LinkedList<ElementType>::front() const{
 
 }
-//aja
+
 template<typename ElementType>
 ElementType LinkedList<ElementType>::back() const {
 
