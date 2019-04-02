@@ -22,7 +22,6 @@ class LinkedList {
         //State
         LinkedListNode* next_;
         ElementType value_;
-        LinkedList* parentList;
     };
 
 public:

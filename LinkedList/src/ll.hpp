@@ -59,6 +59,8 @@ LinkedList<ElementType>::LinkedList(LinkedList<ElementType>&& source) noexcept {
         current = current->next_;
         source.pop_front();
     }
+    
+    source.pop_front();
 
 }
 

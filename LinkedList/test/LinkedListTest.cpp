@@ -47,8 +47,29 @@ TEST_CASE("Linked List Constructor") {
         
         SECTION("Changing value in original doesn't change copy") {
             exampleList.push_front(4.0);
-            REQUIRE(exampleList != copiedList);
-            exampleList.pop_front();
+            CHECK(exampleList != copiedList);
+            exampleList.pop_front(); //removed for safety of other tests
+        }
+        
+        SECTION("Changing value in copy doesn't change original") {
+            copiedList.push_front(5);
+            CHECK(exampleList != copiedList);
+        }
+        
+    }
+    
+    SECTION("Move constructor") {
+        
+        std::vector<float> exampleVec { 3.2f, 4.6f, 8.3f, 9.2f };
+        LinkedList<float> exampleList(exampleVec);
+        LinkedList<float> movedList = std::move(exampleList);
+        
+        SECTION("Deletes example list") {
+            CHECK(exampleList.size() == 0);
+        }
+        
+        SECTION("Moves to moveList") {
+            CHECK(movedList.back() == 9.2f);
         }
         
     }
