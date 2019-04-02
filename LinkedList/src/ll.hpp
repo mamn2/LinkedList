@@ -67,9 +67,7 @@ LinkedList<ElementType>::LinkedList(LinkedList<ElementType>&& source) noexcept {
 // Destructor
 template<typename ElementType>
 LinkedList<ElementType>::~LinkedList() {
-    
     clear();
-
 }
 
 // Copy assignment operator
@@ -173,11 +171,13 @@ void LinkedList<ElementType>::pop_back() {
         LinkedListNode* current = start_;
         for (int i = 1; i < listSize_ - 1; i++) {
             current = current->next_;
+            last_ = current;
         }
         
         LinkedListNode* oldEnd = current->next_;
-        current->next = nullptr;
+        current->next_ = nullptr;
         delete oldEnd;
+        listSize_--;
         
     }
 
@@ -203,6 +203,10 @@ bool LinkedList<ElementType>::empty() const {
 
 template<typename ElementType>
 void LinkedList<ElementType>::clear() {
+    
+    if (size() == 0) {
+        return;
+    }
 
     LinkedListNode* currentNode = start_;
     for (int i = 0; i < listSize_; i++) {

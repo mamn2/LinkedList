@@ -166,3 +166,37 @@ TEST_CASE("Iterator") {
     
 }
 
+TEST_CASE("Push functions") {
+    
+    std::vector<short> newVec { 23, 18, 64 };
+    LinkedList<short> myList(newVec);
+    
+    SECTION("Push front") {
+        myList.push_front(4);
+        CHECK(myList.front() == 4);
+    }
+    
+    SECTION("Push back") {
+        myList.push_back(8);
+        CHECK(myList.back() == 8);
+    }
+    
+}
+
+TEST_CASE("Pop functions") {
+    
+    std::vector<bool> newVec { true, false, true };
+    LinkedList<bool> myList(newVec);
+    
+    SECTION("Pop front") {
+        myList.pop_front();
+        CHECK(myList.front() == false);
+    }
+    
+    SECTION("Pop back") {
+        myList.pop_back();
+        CHECK(myList.back() == false);
+    }
+    
+}
+
