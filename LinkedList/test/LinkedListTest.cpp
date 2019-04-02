@@ -12,7 +12,7 @@
 #include "ll.h"
 #include <vector>
 #include <string>
-#include <iostream>
+#include <sstream>
 
 using namespace cs126linkedlist;
 
@@ -64,14 +64,25 @@ TEST_CASE("Destructor") {
 
 TEST_CASE("Operators") {
     
+    std::vector<char> exampleVector { 'c', 's', '1', '2', '6' };
+    std::vector<char> otherVector { 'c', 's', '1', '2', '6' };
+    
+    LinkedList<char> exampleList(exampleVector);
+    LinkedList<char> otherExampleList(exampleVector);
+    
     SECTION("Equality Operator") {
-        std::vector<char> exampleVector { 'c', 's', '1', '2', '6' };
-        std::vector<char> otherVector { 'c', 's', '1', '2', '6' };
-        
-        LinkedList<char> exampleList(exampleVector);
-        LinkedList<char> otherExampleList(exampleVector);
         CHECK(exampleList == otherExampleList);
-        std::cout << exampleList;
+    }
+    
+    SECTION("Inequality Operator") {
+        CHECK(!(exampleList != otherExampleList));
+    }
+    
+    SECTION("ostream operator") {
+        std::stringstream stringstream;
+        stringstream << exampleList;
+        std::string printStream = stringstream.str();
+        CHECK(printStream == "c  s  1  2  6  ");
     }
     
 }

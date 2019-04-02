@@ -197,7 +197,6 @@ void LinkedList<ElementType>::clear() {
 
 template<typename ElementType>
 std::ostream& operator<<(std::ostream& os, const LinkedList<ElementType>& list) {
-    
     for (auto itr = list.begin(); itr != list.end(); ++itr) {
         os << *itr << "  ";
     }
@@ -278,7 +277,7 @@ typename LinkedList<ElementType>::iterator LinkedList<ElementType>::begin() {
 
 template<typename ElementType>
 typename LinkedList<ElementType>::iterator LinkedList<ElementType>::end() {
-    return iterator(last_->next_);
+    return nullptr;
 }
 
 template<typename ElementType>
@@ -315,5 +314,5 @@ typename LinkedList<ElementType>::const_iterator LinkedList<ElementType>::begin(
 
 template<typename ElementType>
 typename LinkedList<ElementType>::const_iterator LinkedList<ElementType>::end() const {
-    return const_iterator(last_->next_);
+    return nullptr;
 }
