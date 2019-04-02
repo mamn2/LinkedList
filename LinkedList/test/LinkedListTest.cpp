@@ -11,10 +11,16 @@
 #include "catch.hpp"
 #include "ll.h"
 #include <vector>
+#include <string>
 
 using namespace cs126linkedlist;
 
 TEST_CASE("Linked List Constructor") {
+    
+    SECTION("Initialize Empty List") {
+        LinkedList<std::string> linkedList;
+        CHECK(linkedList.empty());
+    }
     
     SECTION("Initialize with std::vector") {
         std::vector<int> exampleVector;
@@ -43,13 +49,78 @@ TEST_CASE("Linked List Constructor") {
 }
 
 TEST_CASE("Destructor") {
+  
     std::vector<int> exampleVector;
     exampleVector.push_back(1);
     exampleVector.push_back(3);
     exampleVector.push_back(8);
     LinkedList<int>* linkedList = new LinkedList<int>(exampleVector);
-    
     delete linkedList;
+    
     CHECK(linkedList->empty());
+
+}
+
+TEST_CASE("Iterator") {
+    
+    SECTION("Non-const iterator") {
+    
+        std::vector<std::string> stringVec { "summer", "plz", "arrive", "faster" };
+        LinkedList<std::string>* linkedList = new LinkedList<std::string>(stringVec);
+
+        LinkedList<std::string>::iterator itr = linkedList->begin();
+
+        SECTION("Returns first value") {
+            CHECK(*itr == "summer");
+        }
+
+        SECTION("Iterates to middle values") {
+            ++itr;
+            ++itr;
+            CHECK(*itr == "arrive");
+        }
+
+        SECTION("Returns last value") {
+            CHECK(*linkedList->end() == "faster");
+        }
+
+        SECTION("Not equals operator") {
+            CHECK(linkedList->begin() != linkedList->end());
+        }
+        
+        SECTION("Ability to change values") {
+            *linkedList->begin() = "changed value";
+            CHECK(*linkedList->begin() == "changed value");
+        }
+        
+    }
+    
+    SECTION("Const iterator") {
+        
+        const std::vector<std::string> stringVec { "summer", "plz", "arrive", "faster" };
+        const LinkedList<std::string>* linkedList = new LinkedList<std::string>(stringVec);
+        
+        LinkedList<std::string>::const_iterator itr = linkedList->begin();
+        
+        SECTION("Returns first value") {
+            CHECK(*itr == "summer");
+        }
+        
+        SECTION("Iterates to middle values") {
+            ++itr;
+            ++itr;
+            CHECK(*itr == "arrive");
+        }
+        
+        SECTION("Returns last value") {
+            CHECK(*linkedList->end() == "faster");
+        }
+        
+        SECTION("Not equals operator") {
+            CHECK(linkedList->begin() != linkedList->end());
+        }
+        
+    }
+    
 }
 
