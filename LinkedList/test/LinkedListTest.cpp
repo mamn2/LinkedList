@@ -12,6 +12,7 @@
 #include "ll.h"
 #include <vector>
 #include <string>
+#include <iostream>
 
 using namespace cs126linkedlist;
 
@@ -61,6 +62,20 @@ TEST_CASE("Destructor") {
 
 }
 
+TEST_CASE("Operators") {
+    
+    SECTION("Equality Operator") {
+        std::vector<char> exampleVector { 'c', 's', '1', '2', '6' };
+        std::vector<char> otherVector { 'c', 's', '1', '2', '6' };
+        
+        LinkedList<char> exampleList(exampleVector);
+        LinkedList<char> otherExampleList(exampleVector);
+        CHECK(exampleList == otherExampleList);
+        std::cout << exampleList;
+    }
+    
+}
+
 TEST_CASE("Iterator") {
     
     SECTION("Non-const iterator") {
@@ -80,14 +95,10 @@ TEST_CASE("Iterator") {
             CHECK(*itr == "arrive");
         }
 
-        SECTION("Returns last value") {
-            CHECK(*linkedList->end() == "faster");
-        }
-
         SECTION("Not equals operator") {
             CHECK(linkedList->begin() != linkedList->end());
         }
-        
+
         SECTION("Ability to change values") {
             *linkedList->begin() = "changed value";
             CHECK(*linkedList->begin() == "changed value");
@@ -110,10 +121,6 @@ TEST_CASE("Iterator") {
             ++itr;
             ++itr;
             CHECK(*itr == "arrive");
-        }
-        
-        SECTION("Returns last value") {
-            CHECK(*linkedList->end() == "faster");
         }
         
         SECTION("Not equals operator") {

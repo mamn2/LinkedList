@@ -197,8 +197,11 @@ void LinkedList<ElementType>::clear() {
 
 template<typename ElementType>
 std::ostream& operator<<(std::ostream& os, const LinkedList<ElementType>& list) {
-//First make the iterator
-
+    
+    for (auto itr = list.begin(); itr != list.end(); ++itr) {
+        os << *itr << "  ";
+    }
+    return os;
 }
 
 template<typename ElementType>
@@ -213,32 +216,59 @@ void LinkedList<ElementType>::RemoveOdd() {
 
 template<typename ElementType>
 bool LinkedList<ElementType>::operator==(const LinkedList<ElementType> &rhs) const {
+    
+    if (size() != rhs.size()) {
+        return false;
+    }
+    
+    auto lhsItr = begin();
+    auto rhsItr = rhs.begin();
+    
+    while (lhsItr != end()) {
+        if (lhsItr != rhsItr) {
+            return false;
+        }
+        ++lhsItr;
+        ++rhsItr;
+    }
+    
+    return true;
 
 }
 
 template<typename ElementType>
 bool operator!=(const LinkedList<ElementType>& lhs, const LinkedList<ElementType> &rhs) {
 
+    return !(lhs == rhs);
+    
 }
 
 template<typename ElementType>
 typename LinkedList<ElementType>::iterator& LinkedList<ElementType>::iterator::operator++() {
-    
     current_ = current_->next_;
     return *this;
-
 }
 
 template<typename ElementType>
 ElementType& LinkedList<ElementType>::iterator::operator*() const {
-    
     return current_->value_;
-
 }
 
 template<typename ElementType>
 bool LinkedList<ElementType>::iterator::operator!=(const LinkedList<ElementType>::iterator& other) const {
-    return current_->value_ != other.current_->value_;
+    
+    if (current_ == nullptr) {
+        if (other.current_ == nullptr) {
+            return false;
+        } else {
+            return true;
+        }
+    } else if (other.current_ == nullptr) {
+        return true;
+    }
+    
+    //recursively checks if all values are equal
+    return current_->value_ != other.current_->value_ && current_->next_ != other.current_->next_;
 }
 
 template<typename ElementType>
@@ -248,7 +278,7 @@ typename LinkedList<ElementType>::iterator LinkedList<ElementType>::begin() {
 
 template<typename ElementType>
 typename LinkedList<ElementType>::iterator LinkedList<ElementType>::end() {
-    return iterator(last_);
+    return iterator(last_->next_);
 }
 
 template<typename ElementType>
@@ -264,7 +294,18 @@ const ElementType& LinkedList<ElementType>::const_iterator::operator*() const {
 
 template<typename ElementType>
 bool LinkedList<ElementType>::const_iterator::operator!=(const LinkedList<ElementType>::const_iterator& other) const {
-    return current_->value_ != other.current_->value_;
+    if (current_ == nullptr) {
+        if (other.current_ == nullptr) {
+            return false;
+        } else {
+            return true;
+        }
+    } else if (other.current_ == nullptr) {
+        return true;
+    }
+    
+    //recursively checks if all values are equal
+    return current_->value_ != other.current_->value_ && current_->next_ != other.current_->next_;
 }
 
 template<typename ElementType>
@@ -274,5 +315,5 @@ typename LinkedList<ElementType>::const_iterator LinkedList<ElementType>::begin(
 
 template<typename ElementType>
 typename LinkedList<ElementType>::const_iterator LinkedList<ElementType>::end() const {
-    return const_iterator(last_);
+    return const_iterator(last_->next_);
 }
