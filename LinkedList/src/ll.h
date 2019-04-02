@@ -15,8 +15,12 @@ template<typename ElementType>
 class LinkedList {
 
     struct LinkedListNode {
+        
+        //Constructors
         LinkedListNode(const ElementType &value);
         ~LinkedListNode();
+        
+        //State
         LinkedListNode* next_;
         ElementType value_;
     };

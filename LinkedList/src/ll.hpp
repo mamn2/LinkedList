@@ -41,8 +41,17 @@ template<typename ElementType>
 LinkedList<ElementType>::LinkedList(const LinkedList<ElementType>& source) {
     
     listSize_ = source.size();
-    start_ = source.front();
-    last_ = source.back();
+    *(start_) = *(source.front());
+    
+    LinkedListNode currentMyNode = start_;
+    LinkedListNode* currentSourceNode = source.front();
+    for (int i = 1; i < source.size(); i++) {
+        *(currentMyNode->next_) = *(currentSourceNode->next_);
+        *(currentMyNode->value_) = *(currentSourceNode->value_);
+        
+    }
+    
+    *(last_) = *(source.back());
 
 }
 
