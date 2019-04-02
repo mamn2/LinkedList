@@ -24,10 +24,7 @@ TEST_CASE("Linked List Constructor") {
     }
     
     SECTION("Initialize with std::vector") {
-        std::vector<int> exampleVector;
-        exampleVector.push_back(4);
-        exampleVector.push_back(7);
-        exampleVector.push_back(9);
+        std::vector<int> exampleVector { 4, 7, 9 };
         LinkedList<int> linkedList(exampleVector);
         
         SECTION("Start node is correct") {
@@ -37,13 +34,22 @@ TEST_CASE("Linked List Constructor") {
             CHECK(linkedList.back() == 9);
         }
         SECTION("Middle node is correct") {
-            
+            auto itr = linkedList.begin();
+            CHECK(*(++itr) == 7);
         }
     }
     
     SECTION("Copy Constructor") {
         
+        std::vector<double> exampleVec { 2.0, 3.0, 4.0 };
+        LinkedList<double> exampleList(exampleVec);
+        LinkedList<double> copiedList = LinkedList<double>(exampleList);
         
+        SECTION("Changing value in original doesn't change copy") {
+            exampleList.push_front(4.0);
+            REQUIRE(exampleList != copiedList);
+            exampleList.pop_front();
+        }
         
     }
     
@@ -51,10 +57,7 @@ TEST_CASE("Linked List Constructor") {
 
 TEST_CASE("Destructor") {
   
-    std::vector<int> exampleVector;
-    exampleVector.push_back(1);
-    exampleVector.push_back(3);
-    exampleVector.push_back(8);
+    std::vector<int> exampleVector { 1, 3, 8 };
     LinkedList<int>* linkedList = new LinkedList<int>(exampleVector);
     delete linkedList;
     
@@ -62,7 +65,7 @@ TEST_CASE("Destructor") {
 
 }
 
-TEST_CASE("Operators") {
+TEST_CASE("LinkedList Operators") {
     
     std::vector<char> exampleVector { 'c', 's', '1', '2', '6' };
     std::vector<char> otherVector { 'c', 's', '1', '2', '6' };

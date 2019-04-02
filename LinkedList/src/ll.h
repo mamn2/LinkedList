@@ -17,7 +17,7 @@ class LinkedList {
     struct LinkedListNode {
         
         //Constructor
-        LinkedListNode(const ElementType &value, LinkedList* parentList);
+        LinkedListNode(const ElementType &value);
         
         //State
         LinkedListNode* next_;
