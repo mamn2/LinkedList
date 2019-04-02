@@ -76,62 +76,118 @@ LinkedList<ElementType>& LinkedList<ElementType>::operator= (LinkedList<ElementT
 template<typename ElementType>
 void LinkedList<ElementType>::push_front(ElementType value) {
     
-    LinkedListNode* oldStart = start_;
-    start_ = new LinkedListNode(value);
-    start_->next_ = oldStart;
+    if (empty()) {
+        start_ = new LinkedListNode(value);
+        last_ = new LinkedListNode(value);
+    } else {
+        LinkedListNode* oldStart = start_;
+        start_ = new LinkedListNode(value);
+        start_->next_ = oldStart;
+    }
+    
+    listSize_++;
 
 }
 
 template<typename ElementType>
 void LinkedList<ElementType>::push_back(ElementType value) {
     
-    LinkedListNode* oldLast = last_;
-    last_ = new LinkedListNode(value);
-    oldLast->next_ = last_;
+    if (empty()) {
+        start_ = new LinkedListNode(value);
+        last_ = new LinkedListNode(value);
+    } else {
+        LinkedListNode* oldLast = last_;
+        last_ = new LinkedListNode(value);
+        oldLast->next_ = last_;
+    }
+    
+    listSize_++;
 
 }
 
 template<typename ElementType>
 ElementType LinkedList<ElementType>::front() const{
     
-    return start_->value_;
+    if (!empty()) {
+        return start_->value_;
+    } else {
+        std::string errorMessage("Can't retrieve front value because list is empty");
+        throw std::out_of_range(errorMessage);
+    }
 
 }
 
 template<typename ElementType>
 ElementType LinkedList<ElementType>::back() const {
     
-    return last_->value_;
+    if (!empty()) {
+        return last_->value_;
+    } else {
+        std::string errorMessage("Can't retrieve back value because list is empty");
+        throw std::out_of_range(errorMessage);
+    }
 
 }
 
 template<typename ElementType>
 void LinkedList<ElementType>::pop_front() {
+    
+    if (!empty()) {
+        LinkedListNode oldStart = start_;
+        start_ = start_->next_;
+        delete oldStart;
+        listSize_--;
+    }
 
 }
 
 template<typename ElementType>
 void LinkedList<ElementType>::pop_back() {
+    
+    if (!empty()) {
+        
+        LinkedListNode* current = start_;
+        for (int i = 1; i < listSize_ - 1; i++) {
+            current = current->next_;
+        }
+        
+        LinkedListNode* oldEnd = current->next_;
+        current->next = nullptr;
+        delete oldEnd;
+        
+    }
 
 }
 
 template<typename ElementType>
 int LinkedList<ElementType>::size() const {
+    
+    return listSize_;
 
 }
 
 template<typename ElementType>
 bool LinkedList<ElementType>::empty() const {
+    
+    if (listSize_ == 0) {
+        return true;
+    } else {
+        return false;
+    }
 
 }
 
-template<typename ElementType>
-void LinkedList<ElementType>::clear() {
-
-}
+//template<typename ElementType>
+//void LinkedList<ElementType>::clear() {
+//
+//    //recursively deletes everything?
+//    delete start_;
+//
+//}
 
 template<typename ElementType>
 std::ostream& operator<<(std::ostream& os, const LinkedList<ElementType>& list) {
+//First make the iterator
 
 }
 

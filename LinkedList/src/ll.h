@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <stdexcept>
 
 namespace cs126linkedlist {
 
