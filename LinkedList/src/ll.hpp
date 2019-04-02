@@ -229,11 +229,29 @@ std::ostream& operator<<(std::ostream& os, const LinkedList<ElementType>& list) 
 
 template<typename ElementType>
 void LinkedList<ElementType>::RemoveNth(int n) {
+    
+    if (n >= size()) {
+        return;
+    }
+    
+    LinkedListNode* current = start_;
+    for (int i = 1; i < n; i++) {
+        current = current->next_;
+    }
+    
+    LinkedListNode* toRemove = current->next_;
+    current->next_ = toRemove->next_;
+    delete toRemove;
+    listSize_--;
 
 }
 
 template<typename ElementType>
 void LinkedList<ElementType>::RemoveOdd() {
+    
+    for (int i = 1; i < size(); i+=2) {
+        RemoveNth(i);
+    }
 
 }
 
@@ -247,6 +265,7 @@ bool LinkedList<ElementType>::operator==(const LinkedList<ElementType> &rhs) con
     auto lhsItr = begin();
     auto rhsItr = rhs.begin();
     
+    //Iterates through both sides and checks if everything is equal
     while (lhsItr != end()) {
         if (lhsItr != rhsItr) {
             return false;

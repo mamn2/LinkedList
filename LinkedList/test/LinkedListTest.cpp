@@ -183,7 +183,7 @@ TEST_CASE("Push functions") {
     
 }
 
-TEST_CASE("Pop functions") {
+TEST_CASE("Pop/remove functions") {
     
     std::vector<bool> newVec { true, false, true };
     LinkedList<bool> myList(newVec);
@@ -191,11 +191,54 @@ TEST_CASE("Pop functions") {
     SECTION("Pop front") {
         myList.pop_front();
         CHECK(myList.front() == false);
+        //Brings back value for safety of other tests
+        myList.push_front(true);
+        
+        SECTION("Handles empty list") {
+            for (int i = 0; i <= myList.size(); i++) {
+                myList.pop_front();
+            }
+        }
     }
     
     SECTION("Pop back") {
         myList.pop_back();
         CHECK(myList.back() == false);
+        //Brings back value for safety of other tests
+        myList.push_back(true);
+        
+        SECTION("Handles empty list") {
+            for (int i = 0; i <= myList.size(); i++) {
+                myList.pop_front();
+            }
+        }
+    }
+    
+    SECTION("Remove Nth") {
+        myList.RemoveNth(1);
+        CHECK(myList.size() == 2);
+        
+        SECTION("Handles bad n") {
+            myList.RemoveNth(9);
+        }
+    }
+    
+    SECTION("Removes odd indices") {
+        std::vector<int> myVec { 0, 1, 2, 3, 4 };
+        LinkedList<int> myList(myVec);
+        
+        myList.RemoveOdd();
+        SECTION("Front value is correct") {
+            CHECK(myList.front() == 0);
+        }
+        
+        SECTION("Back value is correct") {
+            CHECK(myList.back() == 4);
+        }
+        
+        SECTION("Size updated") {
+            CHECK(myList.size() == 3);
+        }
     }
     
 }
