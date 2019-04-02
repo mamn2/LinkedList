@@ -1,7 +1,6 @@
 #include <utility>
 #include <cassert>
 #include "ll.h"
-#include <memory>
 
 using namespace cs126linkedlist;
 
@@ -221,7 +220,8 @@ void LinkedList<ElementType>::clear() {
 
 template<typename ElementType>
 std::ostream& operator<<(std::ostream& os, const LinkedList<ElementType>& list) {
-    for (auto itr = list.begin(); itr != list.end(); ++itr) {
+    
+    for (auto itr = list.begin(); itr != nullptr; ++itr) {
         os << *itr << "  ";
     }
     return os;

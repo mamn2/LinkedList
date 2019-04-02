@@ -81,7 +81,6 @@ TEST_CASE("Destructor") {
     std::vector<int> exampleVector { 1, 3, 8 };
     LinkedList<int>* linkedList = new LinkedList<int>(exampleVector);
     delete linkedList;
-    
     CHECK(linkedList->empty());
 
 }
