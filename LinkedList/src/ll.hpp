@@ -5,10 +5,11 @@
 using namespace cs126linkedlist;
 
 template<typename ElementType>
-LinkedList<ElementType>::LinkedListNode::LinkedListNode(const ElementType &value) : value_(value) {}
+LinkedList<ElementType>::LinkedListNode::LinkedListNode(const ElementType &value, LinkedList* parentList) : value_(value), parentList(parentList) {}
 
 template<typename ElementType>
 LinkedList<ElementType>::LinkedListNode::~LinkedListNode() {
+    parentList->listSize_--;
     delete next_;
 }
 
@@ -21,13 +22,13 @@ LinkedList<ElementType>::LinkedList(const std::vector<ElementType> &values) {
     listSize_ = values.size();
     
     if (listSize_ >= 1) {
-        start_ = new LinkedListNode(values[0]);
+        start_ = new LinkedListNode(values[0], this);
     }
     
     LinkedListNode* current = start_;
 
     for (int i = 1; i < listSize_; i++) {
-        current->next_ = new LinkedListNode(values[i]);
+        current->next_ = new LinkedListNode(values[i], this);
         if (i == listSize_ - 1) {
             last_ = current->next_;
         }
@@ -36,24 +37,24 @@ LinkedList<ElementType>::LinkedList(const std::vector<ElementType> &values) {
 
 }
 
-// Copy constructor
-template<typename ElementType>
-LinkedList<ElementType>::LinkedList(const LinkedList<ElementType>& source) {
-    
-    listSize_ = source.size();
-    *(start_) = *(source.front());
-    
-    LinkedListNode currentMyNode = start_;
-    LinkedListNode* currentSourceNode = source.front();
-    for (int i = 1; i < source.size(); i++) {
-        *(currentMyNode->next_) = *(currentSourceNode->next_);
-        *(currentMyNode->value_) = *(currentSourceNode->value_);
-        
-    }
-    
-    *(last_) = *(source.back());
-
-}
+//// Copy constructor
+//template<typename ElementType>
+//LinkedList<ElementType>::LinkedList(const LinkedList<ElementType>& source) {
+//    
+//    listSize_ = source.size();
+//    *(start_) = *(source.front());
+//    
+//    LinkedListNode currentMyNode = start_;
+//    LinkedListNode* currentSourceNode = source.front();
+//    for (int i = 1; i < source.size(); i++) {
+//        *(currentMyNode->next_) = *(currentSourceNode->next_);
+//        *(currentMyNode->value_) = *(currentSourceNode->value_);
+//        
+//    }
+//    
+//    *(last_) = *(source.back());
+//
+//}
 
 // Move constructor
 template<typename ElementType>
@@ -86,11 +87,11 @@ template<typename ElementType>
 void LinkedList<ElementType>::push_front(ElementType value) {
     
     if (empty()) {
-        start_ = new LinkedListNode(value);
-        last_ = new LinkedListNode(value);
+        start_ = new LinkedListNode(value, this);
+        last_ = new LinkedListNode(value, this);
     } else {
         LinkedListNode* oldStart = start_;
-        start_ = new LinkedListNode(value);
+        start_ = new LinkedListNode(value, this);
         start_->next_ = oldStart;
     }
     
@@ -102,11 +103,11 @@ template<typename ElementType>
 void LinkedList<ElementType>::push_back(ElementType value) {
     
     if (empty()) {
-        start_ = new LinkedListNode(value);
-        last_ = new LinkedListNode(value);
+        start_ = new LinkedListNode(value, this);
+        last_ = new LinkedListNode(value, this);
     } else {
         LinkedListNode* oldLast = last_;
-        last_ = new LinkedListNode(value);
+        last_ = new LinkedListNode(value, this);
         oldLast->next_ = last_;
     }
     
@@ -186,13 +187,12 @@ bool LinkedList<ElementType>::empty() const {
 
 }
 
-//template<typename ElementType>
-//void LinkedList<ElementType>::clear() {
-//
-//    //recursively deletes everything?
-//    delete start_;
-//
-//}
+template<typename ElementType>
+void LinkedList<ElementType>::clear() {
+
+    delete start_;
+
+}
 
 template<typename ElementType>
 std::ostream& operator<<(std::ostream& os, const LinkedList<ElementType>& list) {

@@ -34,5 +34,22 @@ TEST_CASE("Linked List Constructor") {
         }
     }
     
+    SECTION("Copy Constructor") {
+        
+        
+        
+    }
+    
+}
+
+TEST_CASE("Destructor") {
+    std::vector<int> exampleVector;
+    exampleVector.push_back(1);
+    exampleVector.push_back(3);
+    exampleVector.push_back(8);
+    LinkedList<int>* linkedList = new LinkedList<int>(exampleVector);
+    
+    delete linkedList;
+    CHECK(linkedList->empty());
 }
 

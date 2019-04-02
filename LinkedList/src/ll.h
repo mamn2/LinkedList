@@ -17,12 +17,13 @@ class LinkedList {
     struct LinkedListNode {
         
         //Constructors
-        LinkedListNode(const ElementType &value);
+        LinkedListNode(const ElementType &value, LinkedList* parentList);
         ~LinkedListNode();
         
         //State
         LinkedListNode* next_;
         ElementType value_;
+        LinkedList* parentList;
     };
 
 public:
